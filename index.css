@@ -1,0 +1,19 @@
+/* .box {
+  min-width: 0.25em;
+  min-height: 100%;
+} */
+
+.box {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  text-align: center;
+}
+
+.live {
+  background-color: purple;
+}
+
+.dead {
+  background-color: bisque;
+}
