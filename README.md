@@ -2,7 +2,7 @@
 
 https://binyanlin.github.io/Conway-Game-Of-Life/
 
-Simulate's John Horton Conway's rules for the Game of Life.
+Simulates John Horton Conway's rules for the Game of Life.
 
 To-do:
 
