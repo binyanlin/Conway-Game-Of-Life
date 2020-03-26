@@ -1,6 +1,8 @@
+//Units of the board.
 const x = 100;
 const y = 100;
 
+//Function to initialize the HTML table cells.
 const generateBoard = (m, n) => {
   for (let i = 0; i < m; i++) {
     $(".grid").append(`<div class="row row${i}"></div>`);
@@ -34,6 +36,7 @@ const populateBoard = (m, n, percentageLive) => {
 
 populateBoard(x, y, 0.50);
 
+//Function to color the board with CSS classes.
 const colorBoard = (board) => {
   if (board.length == 0 || board == null) return;
   for (let i = 0; i < board.length; i++) {
@@ -51,6 +54,7 @@ const colorBoard = (board) => {
 
 colorBoard(board);
 
+//Function that checks each cell, updating board[i][j].
 const step = (i, j, m, n, board, copy) => {
   let liveCount = 0;
   //upLeft
@@ -96,6 +100,7 @@ const step = (i, j, m, n, board, copy) => {
   }
 }
 
+//Function used to update the board state, calling colorBoard after.
 const update = (board) => {
   const copy = [...board];
   const m = board.length;
