@@ -21,6 +21,7 @@ generateBoard(x, y);
 //Percentage live will be implemented as a decimal;
 const board = [];
 const populateBoard = (m, n, percentageLive) => {
+  board.length = 0;
   for (let i = 0; i < m; i++) {
     const level = [];
     for (let j = 0; j < n; j++) {
@@ -34,7 +35,7 @@ const populateBoard = (m, n, percentageLive) => {
   }
 }
 
-populateBoard(x, y, 0.50);
+// populateBoard(x, y, 0.05);
 
 //Function to color the board with CSS classes.
 const colorBoard = (board) => {
@@ -114,12 +115,34 @@ const update = (board) => {
   colorBoard(board);
 }
 
+let boardIntervalId;
 //Interval inputted as X seconds.
 const stepRate = (interval) => {
-  setInterval(() => {
-    console.log("updating...");
-    update(board);
-  }, interval*1000);
+  boardIntervalId = setInterval(update(board), interval);
 }
 
-stepRate(0.2);
+// stepRate(0.1);
+
+$(document).on("click", ".buttonSpeed", ()=> {
+  event.preventDefault();
+  if (board.length == 0) return;
+  if ($(".buttonSpeed").text() == "Start") {
+    let interval = $(".speedVal").val();
+    clearInterval(boardIntervalId);
+    boardIntervalId = setInterval(() => update(board), interval);
+    $(".buttonSpeed").text("Pause");
+  } else {
+    clearInterval(boardIntervalId);
+    $(".buttonSpeed").text("Start");
+  }
+});
+
+//Populates board with initial state, cannot change unless paused.
+$(document).on("click", ".buttonPopulation", () => {
+  event.preventDefault();
+  clearInterval(boardIntervalId);
+  $(".buttonSpeed").text("Start");
+  populateBoard(x, y, $(".popVal").val()/100);
+  colorBoard(board);
+});
+
