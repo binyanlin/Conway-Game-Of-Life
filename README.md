@@ -9,7 +9,3 @@ To-do:
 -draw your own structures
 
 -make common static and looping patterns click and drop, bordering the grid
-
--add in clarifications on rules of game
-
--create a dragger for move speed and a pause button
