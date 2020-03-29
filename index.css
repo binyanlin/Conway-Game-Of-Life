@@ -10,6 +10,42 @@
   text-align: center;
 }
 
+@media only screen and (max-width: 600px) {
+  .box {
+    position: relative;
+    width: 1px;
+    height: 1px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .box {
+    position: relative;
+    width: 2px;
+    height: 2px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .box {
+    position: relative;
+    width: 4px;
+    height: 4px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .box {
+    position: relative;
+    width: 6px;
+    height: 6px;
+    text-align: center;
+  }
+}
+
 .live {
   background-color: purple;
 }
