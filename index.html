@@ -1,27 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conway's Game of Life</title>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
-  <h1 class="m-5" id="title">Conway's Game of Life</h1>
+
   <div id="center" class="row">
-    <div class="col-sm-2"></div>
-    <div class="col">
-      <div class="grid">
-          
+
+    <div class="col-sm-2">
+
+    </div>
+
+    <div class="col mainCol">
+      <h1 class="text-center mt-4 mb-4" id="title">Conway's Game of Life</h1>
+      <div class="instructions text-center">
+        <h4>Instructions: Populate the board with a % of seed cells, then hit start!</h4>
+      </div>
+      <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10">
+            <form class="form-inline form1 col float-right justify-content-md-center">
+              <p class="align-baseline mr-2 pt-4 txt">Initial Population (%)</p>
+              <input class="slider float-right mx-2" type="range" name="amountRange" min="1" max="100" value="10" oninput="this.form.amountInput.value=this.value" />
+              <input class="float-left ml-2 popVal" type="number" name="amountInput" min="1" max="100" value="10" oninput="this.form.amountRange.value=this.value" />
+              <button class="buttonPopulation ml-2">Populate</button>
+            </form>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+          <form class="form-inline form2 col float-right justify-content-md-center">
+            <p class="text-bottom mr-2 pt-4 txt">Update Speed (ms)  </p>
+            <input class="slider float-right mx-2" type="range" name="amountRange" min="10" max="2000" value="100" oninput="this.form.amountInput.value=this.value" />
+            <input class="float-left ml-2 speedVal" type="number" name="amountInput" min="10" max="2000" value="100" oninput="this.form.amountRange.value=this.value" />
+            <button class="buttonSpeed ml-2">Start</button>
+          </form>
+        </div>
+    </div>
+
+      <div class="grid"></div>
+
+      <div class="div mt-4 text-center">
+        <p><b>Cellular Automation Rules:</b> <br>
+        Any live cell with fewer than two live neighbours dies, as if by underpopulation. <br>
+        Any live cell with two or three live neighbours lives on to the next generation. <br>
+        Any live cell with more than three live neighbours dies, as if by overpopulation. <br>
+        Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</p>
       </div>
     </div>
-    <div class="col-sm-2"></div>
+
+    <div class="col-sm-2">
+
+    </div>
+
   </div>
   <script src="./script.js"></script>
 </body>
+
 </html>
