@@ -6,7 +6,7 @@ let selection = false;  //switch variable for checking mouseover
 // let validM = [];  //array of valid next moves possible
 const moveStack = []; //stores moves made in order
 const moveStroke = []; //stores the most recent move made to be pushed into moveStack.
-let draw = true; //Boolean for whether draw is allowed.
+let draw = false; //Boolean for whether draw is allowed.
 
 //Function to initialize the HTML table cells.
 const generateBoard = (m, n) => {
@@ -128,12 +128,20 @@ const stepRate = (interval) => {
 }
 
 
+const upkeep = () => {
+  draw = false;
+  $(".draw").removeClass("active");
+  $(".undo").addClass("disabled");
+  moveStack.length = 0;
+  clearInterval(boardIntervalId);
+}
 //Event Listeners
 
 //Toggles the speed of the board update operations.
 $(document).on("click", ".buttonSpeed", ()=> {
   event.preventDefault();
   if (board.length == 0) return;
+  upkeep();
   if ($(".buttonSpeed").text() == "Start") {
     let interval = $(".speedVal").val();
     clearInterval(boardIntervalId);
@@ -148,7 +156,7 @@ $(document).on("click", ".buttonSpeed", ()=> {
 //Populates board with initial state, cannot change unless paused.
 $(document).on("click", ".buttonPopulation", () => {
   event.preventDefault();
-  clearInterval(boardIntervalId);
+  upkeep();
   $(".buttonSpeed").text("Start");
   populateBoard(x, y, $(".popVal").val()/100);
   colorBoard(board);
@@ -179,33 +187,46 @@ $(document).on("mouseover", ".box", function () {
       let cur = $(this).attr("id");
       let curArr = cur.split("-");
       board[curArr[0]][curArr[1]] = 1; //sets to live
-      selection = true;
       moveStroke.push(curArr);
     }
   }
 });
-  //interacting with the stack function, aka the undo 
-//     if ($("#"+move).hasClass("selected") && moveStack.indexOf(move)>-1 && moveStack.indexOf(move)!== moveStack.length-1) {
-//       while(moveStack.length-1 > moveStack.indexOf(move)) {
-//         let remove = moveStack.pop();
-//         $("#"+remove).removeClass("selected");
-//         scoreArray.pop();
-//         validM = traverse(move);
-//       }
-//     }
-//   }
-// });
+
+$(document).on("click", ".draw", ()=> {
+  event.preventDefault();
+  if(draw == false) {
+    draw = true;
+    $(".draw").addClass("active");
+    $(".undo").removeClass("disabled");
+    clearInterval(boardIntervalId);
+    $(".buttonSpeed").text("Start");
+  } else {
+    draw = false;
+    $(".draw").removeClass("active");
+    $(".undo").addClass("disabled");
+  }
+  
+  
+});
 
 $(document).on("click", ".undo", ()=> {
   event.preventDefault();
+  if (!draw) return;
   if (moveStack.length == 0) return;
   let unstep = moveStack.pop();
-  console.log(unstep);
   unstep.forEach((arr)=> {
     board[arr[0]][arr[1]] = 0;
     $("#"+arr[0]+"-"+arr[1]).removeClass("live");
     $("#"+arr[0]+"-"+arr[1]).addClass("dead");
   });
+});
+
+$(document).on("click", ".clearBoard", ()=> {
+  event.preventDefault();
+  clearInterval(boardIntervalId);
+  $(".buttonSpeed").text("Start");
+  populateBoard(x, y, 0);
+  colorBoard(board);
 });
 
 //function to clear selections if mouse hovered outside boxes or if mouseup finished
