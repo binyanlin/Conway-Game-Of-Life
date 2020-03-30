@@ -1,6 +1,12 @@
+//Variable Declaration
 //Units of the board.
 const x = 100;
 const y = 100;
+let selection = false;  //switch variable for checking mouseover
+// let validM = [];  //array of valid next moves possible
+const moveStack = []; //stores moves made in order
+const moveStroke = []; //stores the most recent move made to be pushed into moveStack.
+let draw = true; //Boolean for whether draw is allowed.
 
 //Function to initialize the HTML table cells.
 const generateBoard = (m, n) => {
@@ -8,7 +14,7 @@ const generateBoard = (m, n) => {
     $(".grid").append(`<div class="row row${i}"></div>`);
     for (let j = 0; j < n; j++) {
       $(".row"+i).append(`
-      <div id="box${i}-${j}" class="box border"></div>
+      <div id="${i}-${j}" class="box dead noselect border"></div>
       `);
     }
   }
@@ -35,7 +41,7 @@ const populateBoard = (m, n, percentageLive) => {
   }
 }
 
-// populateBoard(x, y, 0.05);
+populateBoard(x, y, 0);
 
 //Function to color the board with CSS classes.
 const colorBoard = (board) => {
@@ -43,11 +49,11 @@ const colorBoard = (board) => {
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[0].length; j++) {
       if (board[i][j] == 0) {
-        $("#box"+i+"-"+j).removeClass("live");
-        $("#box"+i+"-"+j).addClass("dead");
+        $("#"+i+"-"+j).removeClass("live");
+        $("#"+i+"-"+j).addClass("dead");
       } else {
-        $("#box"+i+"-"+j).removeClass("dead");
-        $("#box"+i+"-"+j).addClass("live");
+        $("#"+i+"-"+j).removeClass("dead");
+        $("#"+i+"-"+j).addClass("live");
       }
     }
   }
@@ -121,8 +127,10 @@ const stepRate = (interval) => {
   boardIntervalId = setInterval(update(board), interval);
 }
 
-// stepRate(0.1);
 
+//Event Listeners
+
+//Toggles the speed of the board update operations.
 $(document).on("click", ".buttonSpeed", ()=> {
   event.preventDefault();
   if (board.length == 0) return;
@@ -146,3 +154,81 @@ $(document).on("click", ".buttonPopulation", () => {
   colorBoard(board);
 });
 
+//Draw your own board operations:
+//adds class selected on anything held down and hovered over
+$(document).on("mousedown", ".box", function() {
+  if (!draw) return;
+  moveStroke.length = 0;
+  if (!$(this).hasClass("live")) {
+    $(this).removeClass("dead")
+    $(this).addClass("live");
+    let cur = $(this).attr("id");
+    let curArr = cur.split("-");
+    board[curArr[0]][curArr[1]] = 1; //sets to live
+    selection = true;
+    moveStroke.push(curArr);
+  }
+});
+
+$(document).on("mouseover", ".box", function () {
+  //create function for checking if move is allowed, returns true/false
+  if (selection) {
+    if (!$(this).hasClass("live")) {
+      $(this).removeClass("dead")
+      $(this).addClass("live");
+      let cur = $(this).attr("id");
+      let curArr = cur.split("-");
+      board[curArr[0]][curArr[1]] = 1; //sets to live
+      selection = true;
+      moveStroke.push(curArr);
+    }
+  }
+});
+  //interacting with the stack function, aka the undo 
+//     if ($("#"+move).hasClass("selected") && moveStack.indexOf(move)>-1 && moveStack.indexOf(move)!== moveStack.length-1) {
+//       while(moveStack.length-1 > moveStack.indexOf(move)) {
+//         let remove = moveStack.pop();
+//         $("#"+remove).removeClass("selected");
+//         scoreArray.pop();
+//         validM = traverse(move);
+//       }
+//     }
+//   }
+// });
+
+$(document).on("click", ".undo", ()=> {
+  event.preventDefault();
+  if (moveStack.length == 0) return;
+  let unstep = moveStack.pop();
+  console.log(unstep);
+  unstep.forEach((arr)=> {
+    board[arr[0]][arr[1]] = 0;
+    $("#"+arr[0]+"-"+arr[1]).removeClass("live");
+    $("#"+arr[0]+"-"+arr[1]).addClass("dead");
+  });
+});
+
+//function to clear selections if mouse hovered outside boxes or if mouseup finished
+const clearFunc = () => {
+  selection = false;
+  //copy function
+  if(moveStroke.length > 0) {
+    const temp = [];
+    moveStroke.forEach((arr)=>{
+      temp.push([arr[0], arr[1]]);
+    });
+    moveStack.push(temp);
+  }
+  moveStroke.length = 0;
+}
+
+//removes class selected and sees if move is valid
+$(document).on("mouseup", ".box", function() {
+  if(!selection) return;
+  clearFunc();
+});
+
+$(document).on("mouseleave", ".grid", function() {
+  if(!selection) return;
+  clearFunc();
+});
