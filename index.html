@@ -39,9 +39,9 @@
             <p class="align-baseline mr-2 pt-4 txt">Initial Population (%)</p>
             <input class="slider float-right mx-2" type="range" name="amountRange" min="1" max="100" value="10"
               oninput="this.form.amountInput.value=this.value" />
-            <input class="float-left ml-2 popVal" type="number" name="amountInput" min="1" max="100" value="10"
+            <input class="float-left ml-2 popVal rounded" type="number" name="amountInput" min="1" max="100" value="10"
               oninput="this.form.amountRange.value=this.value" />
-            <button class="buttonPopulation ml-2">Populate</button>
+            <button class="buttonPopulation btn btn-outline-secondary ml-2">Populate</button>
           </form>
         </div>
         <div class="col-sm-1"></div>
@@ -54,9 +54,9 @@
             <p class="text-bottom mr-2 pt-4 txt">Update Speed (ms) </p>
             <input class="slider float-right mx-2" type="range" name="amountRange" min="10" max="2000" value="100"
               oninput="this.form.amountInput.value=this.value" />
-            <input class="float-left ml-2 speedVal" type="number" name="amountInput" min="10" max="2000" value="100"
+            <input class="float-left ml-2 speedVal rounded" type="number" name="amountInput" min="10" max="2000" value="100"
               oninput="this.form.amountRange.value=this.value" />
-            <button class="buttonSpeed ml-2">Start</button>
+            <button class="buttonSpeed btn btn-outline-secondary ml-2">Start</button>
           </form>
         </div>
         <div class="col-sm-1"></div>
@@ -64,9 +64,10 @@
 
       <div class="row">
         <div class="col-sm-1"></div>
-        <div class="col-sm-10 text-center">
-          <button class="draw">Custom Draw</button>
-          <button class="undo">Undo</button>
+        <div class="col-sm-10 text-center mb-2">
+          <button class="draw btn btn-outline-success">Custom Draw</button>
+          <button class="undo btn btn-outline-secondary disabled mr-4">Undo</button>
+          <button class="clearBoard btn btn-outline-danger mx-4">Clear Board</button>
         </div>
         <div class="col-sm-1"></div>
       </div>
