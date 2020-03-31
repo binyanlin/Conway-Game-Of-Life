@@ -63,6 +63,7 @@ colorBoard(board);
 
 //Function that checks each cell, updating board[i][j].
 const step = (i, j, m, n, board, copy) => {
+  
   let liveCount = 0;
   //upLeft
   if(i > 0 && j > 0) {
@@ -101,7 +102,11 @@ const step = (i, j, m, n, board, copy) => {
   } else if(liveCount > 3) {
       board[i][j] = 0;
   } else if(liveCount == 2) {
-      board[i][j] = copy[i][j];
+      if(copy[i][j] == 1) {
+        board[i][j] == 1;
+      } else {
+        board[i][j] == 0;
+      }
   } else if(liveCount == 3) {
       board[i][j] = 1;
   }
@@ -109,7 +114,7 @@ const step = (i, j, m, n, board, copy) => {
 
 //Function used to update the board state, calling colorBoard after.
 const update = (board) => {
-  const copy = [...board];
+  const copy = board.map((arr)=> arr.slice());
   const m = board.length;
   const n = board[0].length;
 
