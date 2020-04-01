@@ -226,6 +226,13 @@ $(document).on("click", ".undo", ()=> {
   });
 });
 
+$(document).on("click", ".step", ()=> {
+  event.preventDefault();
+  upkeep();
+  update(board);
+});
+
+
 $(document).on("click", ".clearBoard", ()=> {
   event.preventDefault();
   clearInterval(boardIntervalId);
