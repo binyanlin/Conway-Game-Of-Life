@@ -10,8 +10,6 @@ Cellular Automation Rules:
 3. Any live cell with more than three live neighbours dies, as if by overpopulation.  
 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.  
 
-![Still frame of game of life board](https://i.imgur.com/I35o5Uu.png)
-
 Tools Used:  
 -Stacks and undo feature  
 -jQuery DOM manipulation  
