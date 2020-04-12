@@ -2,7 +2,7 @@
 
 https://binyanlin.github.io/Conway-Game-Of-Life/
 
-Simulates John Horton Conway's rules for the Game of Life.
+Simulates John Horton Conway's (Rest in Peace) rules for the Game of Life. 
 
 Cellular Automation Rules:  
 1. Any live cell with fewer than two live neighbours dies, as if by underpopulation.  
